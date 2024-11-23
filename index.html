@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calendrier de l'Avent</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #2a2a2a;
+            color: #ffffff;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(to bottom, #2b2b2b, #1d1d1d);
+            flex-direction: column;
+            margin-top: 50px;
+        }
+
+        .calendar {
+            display: grid;
+            grid-template-columns: repeat(8, 100px); /* 10 colonnes */
+            grid-gap: 15px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+        }
+    
+        .day {
+            width: 100px;
+            height: 100px;
+            background-color: #d32f2f; /* Rouge de base */
+            color: #ffffff;
+            font-size: 30px;
+            font-weight: bold;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            border-radius: 10px;
+            cursor: pointer;
+            border: 3px solid #8b0000;
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.5);
+            transition: transform 0.3s, background-color 0.3s, box-shadow 0.3s;
+        }
+
+        .day:hover {
+            transform: scale(1.1);
+            background-color: #388e3c; /* Vert*/
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.7);
+        }
+
+        .day:nth-child(odd) {
+            background-color: #388e3c; /* Vert de base */
+            border-color: #006400;
+        }
+
+        .day:nth-child(odd):hover {
+            background-color: #d32f2f; /* Rouge */
+        }
+
+        .day::before {
+            content: attr(data-icon);
+            position: absolute;
+            font-size: 30px;
+            top: 1px;
+            right: 1px;
+        }
+
+        /* Titre du calendrier */
+        .calendar-title {
+            font-size: 36px;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 20px;
+            color: #fff;
+        }
+
+        .calendar-title span {
+            color: #ff4081; /* Couleur rose pour le cœur */
+        }
+
+        /* Style du bouton de musique */
+        .music-btn {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            background-color: #388e3c;
+            border: 2px solid #006400;
+            padding: 10px;
+            border-radius: 10px;
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s, background-color 0.3s;
+            margin-top: 0px;
+            margin-bottom: 30px;
+        }
+
+        .music-btn:hover {
+            transform: scale(1.1);
+            background-color: #d32f2f; /* Rouge */
+        }
+
+        .music-btn img {
+            width: 50px;
+            height: 50px;
+        }
+
+        .music-btn p {
+            color: white;
+            margin-top: 5px;
+            font-weight: bold;
+        }
+
+
+    /* Styles pour les écrans de téléphone (moins de 768px) */
+@media (max-width: 768px) {
+    .calendar {
+        grid-template-columns: repeat(3, 80px); /* 3 colonnes plus petites */
+        grid-gap: 10px; /* Moins d'espace entre les cases */
+    }
+
+    .day {
+        width: 80px;
+        height: 80px;
+        font-size: 24px; /* Texte plus petit */
+    }
+
+    .calendar-title {
+        font-size: 28px; /* Réduction du titre */
+        margin-bottom: 15px;
+    }
+
+    .music-btn {
+        padding: 8px;
+        font-size: 14px;
+    }
+}
+
+/* Styles pour les écrans encore plus petits (moins de 480px) */
+@media (max-width: 480px) {
+    .calendar {
+        grid-template-columns: repeat(2, 70px); /* 2 colonnes */
+        grid-gap: 8px;
+    }
+
+    .day {
+        width: 70px;
+        height: 70px;
+        font-size: 20px;
+    }
+
+    .calendar-title {
+        font-size: 24px;
+        text-align: center;
+        margin-top: 10px; /* Ajoute de l'espace en haut */
+    }
+
+    .guirlande {
+        max-width: 100%; /* Ajuste la taille de la guirlande */
+        height: auto;    /* Garde le ratio */
+        margin: 0 auto 15px auto; /* Centre la guirlande et ajoute un espace en bas */
+        display: block;
+    
+}
+
+@media (max-width: 480px) {
+    .calendar-title {
+        font-size: 20px;
+        margin-top: 5px;
+    }
+
+    .guirlande {
+        margin-bottom: 10px;
+    }
+}
+
+
+img, video {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+}
+
+
+
+
+
+    </style>
+</head>
+<body>
+
+    <!-- Guirlande au-dessus du titre -->
+    <div class="garland">
+        <img src="media/guirlande.png" alt="Guirlande de Noël">
+    </div>
+
+    <!-- Titre du calendrier -->
+    <div class="calendar-title">
+        Calendrier de l'Avent 2024 <span>❤️</span>
+    </div>
+
+    <!-- Bouton de musique -->
+    <div class="music-btn" id="musicBtn" onclick="toggleMusic()">
+        <img id="musicIcon" src="media/note.png" alt="Note de musique">
+        <p id="musicText">Lire la musique</p>
+    </div>
+
+    <div class="calendar">
+        <!-- Les cases du calendrier ici -->
+            <div class="day" data-icon="❄️" onclick="openContent(1)">1</div>
+            <div class="day" data-icon="🎄" onclick="openContent(2)">2</div>
+            <div class="day" data-icon="🎁" onclick="openContent(3)">3</div>
+            <div class="day" data-icon="🍪" onclick="openContent(4)">4</div>
+            <div class="day" data-icon="🎅" onclick="openContent(5)">5</div>
+            <div class="day" data-icon="🦌" onclick="openContent(6)">6</div>
+            <div class="day" data-icon="🌟" onclick="openContent(7)">7</div>
+            <div class="day" data-icon="☃️" onclick="openContent(8)">8</div>
+            <div class="day" data-icon="🔥" onclick="openContent(9)">9</div>
+            <div class="day" data-icon="🕯️" onclick="openContent(10)">10</div>
+            <div class="day" data-icon="🎀" onclick="openContent(11)">11</div>
+            <div class="day" data-icon="🎶" onclick="openContent(12)">12</div>
+            <div class="day" data-icon="🧣" onclick="openContent(13)">13</div>
+            <div class="day" data-icon="🦌" onclick="openContent(14)">14</div>
+            <div class="day" data-icon="🎅" onclick="openContent(15)">15</div>
+            <div class="day" data-icon="🎄" onclick="openContent(16)">16</div>
+            <div class="day" data-icon="🛷" onclick="openContent(17)">17</div>
+            <div class="day" data-icon="🥂" onclick="openContent(18)">18</div>
+            <div class="day" data-icon="❄️" onclick="openContent(19)">19</div>
+            <div class="day" data-icon="🦌" onclick="openContent(20)">20</div>
+            <div class="day" data-icon="🎁" onclick="openContent(21)">21</div>
+            <div class="day" data-icon="🌟" onclick="openContent(22)">22</div>
+            <div class="day" data-icon="☃️" onclick="openContent(23)">23</div>
+            <div class="day" data-icon="🎄" onclick="openContent(24)">24</div>
+    </div>
+
+
+
+
+
+    <script>
+        const audio = new Audio('media/joyeux_noel.mp3');
+        let isPlaying = false;
+
+        // Fonction pour lire ou mettre en pause la musique
+        function toggleMusic() {
+            const musicText = document.getElementById('musicText');
+            const musicIcon = document.getElementById('musicIcon');
+
+            if (isPlaying) {
+                audio.pause();
+                musicText.textContent = 'Lire la musique';
+                musicIcon.src = 'media/note.png'; // Change l'icône si la musique est en pause
+            } else {
+                audio.play();
+                musicText.textContent = 'Pause';
+                musicIcon.src = 'media/pause.png'; // Change l'icône quand la musique joue
+            }
+
+            isPlaying = !isPlaying;
+        }
+
+        function openContent(day) {
+            const content = {
+                1: '<img src="media/photo1.png" alt="Photo de nous" style="max-width:90%; max-height:90%;">',
+                2: '<video controls style="max-width:90%; max-height:90%;"><source src="media/video1.mp4" type="video/mp4">Votre navigateur ne supporte pas la vidéo.</video>',
+                3: '<img src="media/photo2.png" alt="Photo de nous" style="max-width:90%; max-height:90%;">',
+                4: '<img src="media/photo3.png" alt="Photo de nous" style="max-width:90%; max-height:90%;">',
+                5: '<video controls style="max-width:90%; max-height:90%;"><source src="media/video2.mp4" type="video/mp4">Votre navigateur ne supporte pas la vidéo.</video>',
+                6: '<img src="media/photo4.png" alt="Photo de nous" style="max-width:90%; max-height:90%;">',
+                7:'<img src="media/photo5.png" alt="Photo de nous" style="max-width:90%; max-height:90%;">',
+                8:'<img src="media/photo6.png" alt="Photo de nous" style="max-width:90%; max-height:90%;">',
+                9:'<img src="media/photo7.png" alt="Photo de nous" style="max-width:90%; max-height:90%;">',
+                10:'<img src="media/photo8.png" alt="Photo de nous" style="max-width:90%; max-height:90%;">',
+                11: '<img src="media/photo9.png" alt="Photo de nous" style="max-width:90%; max-height:90%;">',
+                12: '<img src="media/photo10.png" alt="Photo de nous" style="max-width:90%; max-height:90%;">',
+                13: '<img src="media/photo11.png" alt="Photo de nous" style="max-width:90%; max-height:90%;">',
+                14: '<img src="media/photo12.png" alt="Photo de nous" style="max-width:90%; max-height:90%;">',
+                15: '<img src="media/photo13.png" alt="Photo de nous" style="max-width:90%; max-height:90%;">',
+                16: '<img src="media/photo14.png" alt="Photo de nous" style="max-width:90%; max-height:90%;">',
+
+
+            };
+
+        // Créer la boîte modale
+        const modal = document.createElement('div');
+            modal.style.position = 'fixed';
+            modal.style.top = '0';
+            modal.style.left = '0';
+            modal.style.width = '100%';
+            modal.style.height = '100%';
+            modal.style.backgroundColor = 'rgba(0, 0, 0, 0.8)';
+            modal.style.color = 'white';
+            modal.style.display = 'flex';
+            modal.style.justifyContent = 'center';
+            modal.style.alignItems = 'center';
+            modal.style.zIndex = '1000';
+            modal.innerHTML = content[day] || '<p>Contenu à venir !</p>';
+
+        // Créer le bouton de fermeture (X)
+        const closeButton = document.createElement('span');
+            closeButton.textContent = 'X';
+            closeButton.style.position = 'absolute';
+            closeButton.style.top = '10px';
+            closeButton.style.right = '20px';
+            closeButton.style.fontSize = '30px';
+            closeButton.style.cursor = 'pointer';
+            closeButton.style.color = '#ff4081';
+            closeButton.style.fontWeight = 'bold';
+        
+        // Ajouter le bouton de fermeture à la modale
+        modal.appendChild(closeButton);
+
+        // Fermer la boîte modale lorsqu'on clique sur le bouton "X"
+        closeButton.onclick = () => document.body.removeChild(modal);
+
+        // Fermer la boîte modale lorsqu'on clique en dehors du contenu
+        modal.onclick = (event) => {
+            if (event.target === modal) {
+                document.body.removeChild(modal);
+            }
+        };
+
+        // Ajouter la modale à la page
+        document.body.appendChild(modal);
+    }
+
+    </script>
+
+</body>
+</html>
